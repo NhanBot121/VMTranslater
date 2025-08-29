@@ -14,8 +14,8 @@
 */
 
 
-#define MAX_COMMAND_LENGTH 128
-#define MAX_NUM_COMMAND 1024
+#define MAX_COMMAND_LENGTH 256
+#define MAX_NUM_COMMAND 4096
 
 typedef enum __CommandType {
 	C_ARITHMETIC,
@@ -28,7 +28,6 @@ typedef enum __CommandType {
 
 typedef struct __Command {
 	char line[MAX_COMMAND_LENGTH];
-	CommandType type;
 } Command;
 
 typedef struct __Parser {
@@ -37,11 +36,16 @@ typedef struct __Parser {
 	int count;
 } Parser;
 
-Parser* parser_init(char* input_file);
+Parser* parser_init(const char* input_file);
 int hasMoreLines(Parser* parser);
 void advance(Parser* parser);
-CommandType commandType(Parser* parser);
-const char* arg1(Parser* parser);
-int arg2(Parser* parser);
+CommandType commandType(const char*);
+char* commandLine(Parser* parser);
+char* get_arg1(char*);
+int get_arg2(char*);
 
+// Some helper functions
+int isEmptyLine(const char* line);
+int isCommentLine(const char* line);
+void trimSpaces(char* line);
 #endif
