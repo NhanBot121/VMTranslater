@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 // get the name of the output file
-const char* output_filename(const char* input_filename);
+char* create_output_filename(const char* input_filename);
 
 
 // 

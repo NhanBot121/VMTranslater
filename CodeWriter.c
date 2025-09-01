@@ -1,19 +1,26 @@
 #include "CodeWriter.h"
 #include <string.h>
-const char* output_filename(const char* input_filename) {
-	static char out_file[256];
-
-	strcpy(out_file, input_filename);
-	char* dot_pos = strrchr(input_filename, '.');
-	if (!dot_pos) {
-		strcat(out_file, ".hack");
-	} else {
-		strcpy(dot_pos, ".hack");
-	}
-
-
-	return out_file;
+// Create output filename from input filename
+char* create_output_filename(const char* input_filename) {
+    static char output_filename[256];
+    
+    // Copy input filename
+    strcpy(output_filename, input_filename);
+    
+    // Find the last dot for extension
+    char* dot_pos = strrchr(output_filename, '.');
+    
+    if (dot_pos) {
+        // Replace extension with .hack
+        strcpy(dot_pos, ".asm");
+    } else {
+        // No extension, just append .hack
+        strcat(output_filename, ".asm");
+    }
+    
+    return output_filename;
 }
+
 
 int label_counter = 0;
 
@@ -312,6 +319,3 @@ void writeArithmetic(FILE* fp, const char* cmd) {
         fprintf(fp, "M=!M\n");
     }
 }
-
-
-
